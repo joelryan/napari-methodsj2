@@ -54,51 +54,6 @@
             "blurb": "%s timepoints,"
         },
         {
-            "Dialog_Box": "Image dimensions",
-            "category": "core",
-            "Setting": "Dimension order: ",
-            "Add_to_same_row": 0,
-            "Dialog_Type": "addStringField",
-            "metadata key": "getPixelsDimensionOrder",
-            "metadata value": "",
-            "blurb": "with dimensional order %s."
-        },
-        {
-            "Dialog_Box": "Image dimensions",
-            "category": "core",
-            "Setting": "Pixel size XY (micron): ",
-            "Add_to_same_row": 0,
-            "Dialog_Type": "addStringField",
-            "metadata key": "getPixelsPhysicalSizeX",
-            "metadata value": "",
-            "blurb": "Voxels had a lateral size of %s um"
-        },
-        {
-            "Dialog_Box": "Image dimensions",
-            "category": "core",
-            "Setting": "Voxel size Z (micron): ",
-            "conditional_setting": "Number of slices (Z): ",
-            "conditional_value": "True",
-            "Add_to_same_row": 0,
-            "Dialog_Type": "addStringField",
-            "metadata key": "getPixelsPhysicalSizeZ",
-            "metadata value": "",
-            "blurb": "and a depth of %s um."
-        },
-        {
-            "Dialog_Box": "Image dimensions",
-            "category": "core",
-            "Setting": "Time interval: ",
-            "Add_to_same_row": 0,
-            "Dialog_Type": "addStringField",
-            "conditional_setting": "Number of frames (T): ",
-            "conditional_value": "True",
-            "metadata key": "frameInterval",
-            "metadata value": "",
-            "blurb": "The time interval between frames was %s s."
-        },
-
-        {
             "Dialog_Type": "addChoice",
             "category": "core",
             "Dialog_Box": "Objective",
