@@ -1,5 +1,5 @@
 {
-    "settings": [
+    
 
         {
             "Dialog_Box": "Image dimensions",
@@ -53,7 +53,7 @@
             "metadata value": "",
             "blurb": "%s timepoints,"
         }
-        ]
+        
       {
             "Dialog_Type": "addChoice",
             "category": "core",
