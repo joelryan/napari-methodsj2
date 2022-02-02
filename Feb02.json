@@ -32,6 +32,28 @@
             "metadata value": "",
             "blurb": "%s planes (z),"
         },
+        {
+            "Dialog_Box": "Image dimensions",
+            "category": "core",
+            "Setting": "Number of channels (C): ",
+            "Add_to_same_row": 0,
+            "Dialog_Type": "addStringField",
+            "metadata key": "getPixelsSizeC",
+            "metadata value": "",
+            "blurb": "%s channels,"
+        },
+        {
+            "Dialog_Box": "Image dimensions",
+            "category": "core",
+            "Setting": "Number of frames (T): ",
+            "Add_to_same_row": 0,
+            "Dialog_Type": "addStringField",
+            "conditional_value": "",
+            "metadata key": "getPixelsSizeT",
+            "metadata value": "",
+            "blurb": "%s timepoints,"
+        }
+        ]
       {
             "Dialog_Type": "addChoice",
             "category": "core",
