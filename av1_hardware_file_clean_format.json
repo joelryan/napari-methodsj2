@@ -1036,6 +1036,7 @@
                                                                       'ExcitationFilter': {'schemaType': 'FilterCube',
                                                                                            'value': 'na'},
                                                                       'StandardDichroic': {'schemaType': 'FilterCube',
-                                                                                           'value': 'na'}}}}
+                                                                                           'value': 'na'}}}
+}
 
 
