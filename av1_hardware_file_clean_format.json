@@ -1,4 +1,5 @@
-{'AppVersion': '1.2.2-b1',
+{
+ 'AppVersion': '1.2.2-b1',
  'ID': '93efaebd-1042-43aa-994e-2f5bc2a92fb1',
  'MicroscopeStand': {'CatalogNumber': '999',
                      'Category': 'MicroscopeStand',
