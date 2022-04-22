@@ -52,6 +52,39 @@ for wid in widget_info:
 list1=['Image width in pixels (X): ', 'Image height in pixels (Y): ', 'Number of slices (Z): ', 'Number of channels (C): ', 'Number of frames (T): ']
 
 
+#setting range
+@magicgui(
+    auto_call=True,
+    Micro_Meta_App_json_file={'mode': 'r'}, 
+    call_button='Run',
+    layout='vertical'
+)
+
+#give a specific value shown
+def fileSelection(Image: ImageData,  Micro_Meta_App_json_file =  pathlib.Path.home()) -> ImageData:
+    """Apply a gaussian blur to ``layer``."""
+
+    try:
+        global fn_options 
+        # fn_options= read_json(Micro_Meta_App_json_file)
+    except:
+        fn_options=None
+
+def update(f: str):
+    # if len(gaussian_blur) > 2:
+    #     del gaussian_blur[1]
+    if fn_options != None:
+        viewer.window.add_dock_widget(image_dimensions,name='Image Dimensions')
+# insert three widgets similar to the Objectives widget:"ExcitationFilter.json""StandardDichroic.json""EmissionFilter.json"
+        for i in range(len(widget_params)):
+            wid_labels=list(widget_params.keys())[i]
+            wid_choices=widget_params[wid_labels]
+            wid_name=wid_labels
+            image_dimensions.insert(i+6,ComboBox(name=wid_name,label=wid_labels,choices=wid_choices))
+        viewer.window.add_dock_widget(channelProperties,name='Channel Properties')
+
+
+
 @magicgui(
     call_button='confirm',
     o1={'label':str(list1[0])},
@@ -98,14 +131,11 @@ def store_params(event):
 
 
 viewer = napari.Viewer()
-viewer.window.add_dock_widget(image_dimensions,name='Image Dimensions')
-# insert three widgets similar to the Objectives widget:"ExcitationFilter.json""StandardDichroic.json""EmissionFilter.json"
-for i in range(len(widget_params)):
-    wid_labels=list(widget_params.keys())[i]
-    wid_choices=widget_params[wid_labels]
-    wid_name=wid_labels
-    image_dimensions.insert(i+6,ComboBox(name=wid_name,label=wid_labels,choices=wid_choices))
-viewer.window.add_dock_widget(channelProperties,name='Channel Properties')
+viewer.window.add_dock_widget(fileSelection,name='File Selection')
+
+
+fileSelection.Micro_Meta_App_json_file.changed.connect(update)
+
 
 
 
