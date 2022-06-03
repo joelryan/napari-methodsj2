@@ -44,7 +44,7 @@ There is sample data in the File menu, or get started with your own images!
 For the demo image and [Micro-Meta App](https://github.com/WU-BIMAC/MicroMetaApp-Electron/releases/tag/1.2.2-b1-1) hardware specifications file displayed above, the output of Napari-MethodsJ2 should look like this:
 ```
 
-The selected image has a width of 519.0 pixels, a height of 528.0 pixels, 10.0 channel(s), 6.0 slice(s), and 7.0 frame(s)The excitation and emission filter were BP 450-490 - GFP excitation filter and BP 445/50 - DAPI emission filter and the exposure time was 8.0.
+The selected image has a width of 519.0 pixels, a height of 528.0 pixels, 3 channel(s), 1 slice(s), and 1 frame(s)The excitation and emission filter were BP 450-490 - GFP excitation filter and BP 445/50 - DAPI emission filter.
 ```
 
 ## Contributing
