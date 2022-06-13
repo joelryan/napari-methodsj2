@@ -9,14 +9,13 @@ from magicgui import magicgui
 import numpy
 import pathlib
 from typing import Sequence
-from magicgui.widgets import Label
-from magicgui.widgets import ComboBox
+from magicgui.widgets import Label,ComboBox,create_widget,Container
 from superqt import sliders
 import pickle
 import json
 from urllib.request import urlopen
 import json
-
+import cv2
 
 PARAMS={}
 
@@ -48,11 +47,21 @@ widget_params={}
 for wid in widget_info:
     wid_name=wid[:-5]
     widget_params[wid_name]= read_json(path,wid)
+wid_labels=list(widget_params.keys())
 
-list1=['Image width in pixels (X): ', 'Image height in pixels (Y): ', 'Number of slices (Z): ', 'Number of channels (C): ', 'Number of frames (T): ']
+print(wid_labels)
+wid_options=list(widget_params.values())
 
+@magicgui(
+    call_button='confirm',
+    filter1={'choices':wid_options[0],'label':wid_labels[0]},
+    filter2={'choices':wid_options[1],'label':wid_labels[1]},
+    filter3={'choices':wid_options[2],'label':wid_labels[2]},
+    filter4={'choices':wid_options[3],'label':wid_labels[3]})
+#give a specific value shown
+def filterProperties(filter1=wid_options[0][0],filter2=wid_options[1][0],filter3=wid_options[2][0],filter4=wid_options[3][0]) -> ImageData:
+    pass
 
-#setting range
 @magicgui(
     auto_call=True,
     Micro_Meta_App_json_file={'mode': 'r'}, 
@@ -62,61 +71,60 @@ list1=['Image width in pixels (X): ', 'Image height in pixels (Y): ', 'Number of
 
 #give a specific value shown
 def fileSelection(Image: ImageData,  Micro_Meta_App_json_file =  pathlib.Path.home()) -> ImageData:
-    """Apply a gaussian blur to ``layer``."""
-
     try:
         global fn_options 
-        # fn_options= read_json(Micro_Meta_App_json_file)
+        fn_options= read_json(Micro_Meta_App_json_file)
     except:
         fn_options=None
 
 def update(f: str):
-    # if len(gaussian_blur) > 2:
-    #     del gaussian_blur[1]
-    if fn_options != None:
-        viewer.window.add_dock_widget(image_dimensions,name='Image Dimensions')
-# insert three widgets similar to the Objectives widget:"ExcitationFilter.json""StandardDichroic.json""EmissionFilter.json"
-        for i in range(len(widget_params)):
-            wid_labels=list(widget_params.keys())[i]
-            wid_choices=widget_params[wid_labels]
-            wid_name=wid_labels
-            image_dimensions.insert(i+6,ComboBox(name=wid_name,label=wid_labels,choices=wid_choices))
-        viewer.window.add_dock_widget(channelProperties,name='Channel Properties')
+    # if fn_options != None:
+    container = Container(widgets=[create_widget(value=dim[i],name=list1[i],options={'max':2**20}) for i in range(len(list1))])
+    viewer.window.add_dock_widget(container,name='Image Dimensions')
+    viewer.window.add_dock_widget(filterProperties,name='Filter Properties')
+    viewer.window.add_dock_widget(microscopeProperties,name='Microscope Descriptors')
 
-
-
+ #######################Microscope descriptor
 @magicgui(
     call_button='confirm',
-    o1={'label':str(list1[0])},
-    o2={'label':str(list1[1])},
-    o3={'label':str(list1[2])},
-    o4={'label':str(list1[3])},
-    o5={'label':str(list1[4])},
-    layout='vertical'
-)
+    Microscope_descriptor={'choices':['None','Camera (widefield, TIRF, spinning disk)', 'PMT (confocal, multiphoton)']})
 #give a specific value shown
-def image_dimensions(o1:float = 512,o2:float = 512,o3:float = 1,o4:float = 1,o5:float = 1) -> ImageData:
-# def image_dimensions(layer: ImageData,lens_option='c') -> ImageData:
-    """Apply a gaussian blur to ``layer``."""
+def microscopeProperties(Microscope_descriptor='None') -> ImageData:
     pass
 
-@image_dimensions.changed.connect
+@microscopeProperties.changed.connect
 def store_params(event):
     widget = event.value
     PARAMS[widget.name] = {
         n: p.default for n, p in widget.__signature__.parameters.items()
     }
-    savejson(PARAMS)
+    if PARAMS[widget.name]['Microscope_descriptor']=='Camera (widefield, TIRF, spinning disk)':
+        if len(scanningProperties) >= 1:
+            scanningProperties.pop(0).native.close()
+            viewer.window.add_dock_widget(channelProperties,name='Channel Properties')
+        else:
+            viewer.window.add_dock_widget(channelProperties,name='Channel Properties')
+
+
+    if PARAMS[widget.name]['Microscope_descriptor']=='PMT (confocal, multiphoton)':
+        if len(channelProperties) >= 1:
+            channelProperties.pop(0).native.close()
+            viewer.window.add_dock_widget(scanningProperties,name='Scanning Properties')
+        else:
+            viewer.window.add_dock_widget(scanningProperties,name='Scanning Properties')
+
+
+    savejson(PARAMS)   
+
 
 @magicgui(
     call_button='confirm',
-    o1={'label':'Exposure time'},
-    o2={'label':"Light source intensity"},
+    exposureTime={'label':'Exposure time'},
+    lightSource={'label':"Light source intensity"},
     Binning={'choices':['1x1', '2x2', '4x4']},
-    layout='vertical'
-)
+    layout='vertical')
 #give a specific value shown
-def channelProperties(o1:float = None,o2:float = None,Binning='1x1') -> ImageData:
+def channelProperties(exposureTime:float = None,lightSource:float = None,Binning='1x1') -> ImageData:
 # def image_dimensions(layer: ImageData,lens_option='c') -> ImageData:
     """Apply a gaussian blur to ``layer``."""
     pass
@@ -130,14 +138,53 @@ def store_params(event):
     savejson(PARAMS)
 
 
-viewer = napari.Viewer()
-viewer.window.add_dock_widget(fileSelection,name='File Selection')
+#####################Scanning properties
+@magicgui(
+    call_button='confirm',
+    Dwell_Time={'label':'Dwell Time'},
+    averaging={'label':"Averaging"},
+    gain={'label':"Gain"},
+    pinhole={'label':"Pinhole"},
+    layout='vertical')
+#give a specific value shown
+def scanningProperties(Dwell_Time:float = 1,averaging:float = 1,gain:float = 800,pinhole:float = 1) -> ImageData:
+    pass
 
+@scanningProperties.changed.connect
+def store_params(event):
+    widget = event.value
+    PARAMS[widget.name] = {
+        n: p.default for n, p in widget.__signature__.parameters.items()
+    }
+    savejson(PARAMS)
+
+
+
+viewer = napari.Viewer()
+
+dim=[512,512,512,1,1]
+list1=['Image width in pixels (X): ', 'Image height in pixels (Y): ', 'Number of slices (Z): ', 'Number of channels (C): ', 'Number of frames (T): ']
+@viewer.layers.events.inserted.connect
+def _on_insert(event):
+    img_path=viewer.layers[0].source.path
+    im = cv2.imread(img_path)
+    h, w, c = im.shape
+    print(h,w,c)
+    dim[0],dim[1],dim[3]=w,h,c
+    PARAMS['image_dimensions']=[h,w,c]
+    savejson(PARAMS)
+  
+    layer = event.value
+
+
+
+
+
+
+viewer.window.add_dock_widget(fileSelection,name='File Selection')
+ 
 
 fileSelection.Micro_Meta_App_json_file.changed.connect(update)
-
-
-
 
 
 napari.run()
