@@ -173,8 +173,8 @@ def store_params(event):
 
 
 viewer = napari.Viewer()
-dim=[512,512,512,1,1]
-list1=['Image width in pixels (X): ', 'Image height in pixels (Y): ', 'Number of slices (Z): ', 'Number of channels (C): ', 'Number of frames (T): ']
+dim=[512,512,1,1,1]
+list1=['Image width in pixels (X): ', 'Image height in pixels (Y): ',  'Number of channels (C): ', 'Number of slices (Z): ','Number of frames (T): ']
 @viewer.layers.events.inserted.connect
 def _on_insert(event):
 
