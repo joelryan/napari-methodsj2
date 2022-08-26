@@ -1,0 +1,10 @@
+pyproject.toml
+setup.cfg
+napari_methods/__init__.py
+napari_methods.egg-info/PKG-INFO
+napari_methods.egg-info/SOURCES.txt
+napari_methods.egg-info/dependency_links.txt
+napari_methods.egg-info/entry_points.txt
+napari_methods.egg-info/not-zip-safe
+napari_methods.egg-info/requires.txt
+napari_methods.egg-info/top_level.txt

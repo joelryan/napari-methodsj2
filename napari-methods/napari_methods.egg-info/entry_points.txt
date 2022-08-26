@@ -1,0 +1,2 @@
+[napari.manifest]
+napari-methods = napari_methods:napari.yaml

@@ -1,0 +1,6 @@
+imageio
+aicsimageio
+napari>=0.4.8
+napari-plugin-engine>=0.1.9
+PyQt5
+qtpy
