@@ -13,21 +13,34 @@ The original imageJ2 written in Python2. The plugin code is written in Python 3 
 
 ## Installation
 
+<!---
+
 Install an [Anaconda](https://www.anaconda.com/download/) distribution of Python -- Choose **Python 3** and your operating system. Note you might need to use an anaconda prompt if you did not add anaconda to the path.
 
-Install `napari` with pip: `pip install napari[all]`. Then run `demo.py` by via:
+-->
 
-    python3 demo.py
+Install `napari` with pip: `pip install napari[all]`. 
+Then install the napri-methods plugin and start Napari via:
 
- Or run the script file in python environment.
+    pip install -e .
+    napari
+Once napari starts, select `napari-methods:  Napari Methods` from the `Plugins` menu, then click the `Run` button to start autogenerating your citation text!
+
+
+
+
+
+
 
 
 
 ## Running the software
 
-The Napari software will automatically open when running the script.
+The Napari software will automatically open when running the plugin.
 
-The script displays dialog boxes wherein users can directly input information as text, or select the appropriate options from a drop-down menu assembled from the microscopy hardware specifications file generated in Micro-Meta App. User input and selections are then used to "fill in the blanks" in blocks of text designed to generate a draft of a experimental methods section.
+![Demo Widgets](https://github.com/joelryan/napari-methodsj2/blob/main/mainpage.png)
+
+The plugin displays dialog boxes wherein users can directly input information as text, or select the appropriate options from a drop-down menu assembled from the microscopy hardware specifications file generated in Micro-Meta App. User input and selections are then used to "fill in the blanks" in blocks of text designed to generate a draft of a experimental methods section.
 To begin with, the users would be asked to select the micro meta json file:
 
 ![Welcome page](https://github.com/joelryan/napari-methodsj2/blob/main/demo0.png)
@@ -40,6 +53,16 @@ After selecting a json file, information would be automatically read and corresp
 > Demo image (BPAE_3color_30p-200ms_63xOil_003_diffExp_Int__.czi).
 
 There is sample data in the File menu, or get started with your own images!
+
+We provide several common optional parameters in optional setting part. Select Environmental Conditions if you changed the concentration of CO2 or temperature, and select focus stablization if you used additional focus divices.
+
+You can also customize your widget by changing the self.optional_setting in __init__.py-> class uic(object)->def __init__(self,viewer). The input should be in the form of "target object name":{'label':['label you want to show'],'sourceData':'hardware_json_file','type':'ComboBox'( choose from 'ComboBox' , 'SpinBox', and 'LineEdit')
+For example,
+self.optional_setting={'lightsource':{'label':['PiezoElectricStage'],'sourceData':'hardware_json_file','type':'ComboBox'}
+}
+would generate a following widget:
+![Demo Widgets](https://github.com/joelryan/napari-methodsj2/blob/main/customizedWidget.png)
+
 
 For the demo image and [Micro-Meta App](https://github.com/WU-BIMAC/MicroMetaApp-Electron/releases/tag/1.2.2-b1-1) hardware specifications file displayed above, the output of Napari-MethodsJ2 should look like this:
 ```
