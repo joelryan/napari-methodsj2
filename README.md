@@ -38,8 +38,6 @@ Once napari starts, select `napari-methods:  Napari Methods` from the `Plugins` 
 
 The Napari software will automatically open when running the plugin.
 
-![Demo Widgets](https://github.com/joelryan/napari-methodsj2/blob/main/mainpage.png)
-
 The plugin displays dialog boxes wherein users can directly input information as text, or select the appropriate options from a drop-down menu assembled from the microscopy hardware specifications file generated in Micro-Meta App. User input and selections are then used to "fill in the blanks" in blocks of text designed to generate a draft of a experimental methods section.
 To begin with, the users would be asked to select the micro meta json file:
 
@@ -47,7 +45,8 @@ To begin with, the users would be asked to select the micro meta json file:
 
 After selecting a json file, information would be automatically read and corresponding widgets would show:
 
-![Demo Widgets](https://github.com/joelryan/napari-methodsj2/blob/main/demo2.png)
+
+![Demo Widgets](https://github.com/joelryan/napari-methodsj2/blob/main/mainpage.png)
 
 ![Montage_BPAE__8bit_Montage](https://user-images.githubusercontent.com/64212264/120518327-77ad6200-c39f-11eb-9a6c-5a49c5aca810.png)
 > Demo image (BPAE_3color_30p-200ms_63xOil_003_diffExp_Int__.czi).
