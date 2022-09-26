@@ -7,4 +7,4 @@ contributions:
   widgets:
     - command: napari-methods.methods # note, same as command.id above
       display_name: Napari Methods
-      autogenerate: true
+      autogenerate: false
