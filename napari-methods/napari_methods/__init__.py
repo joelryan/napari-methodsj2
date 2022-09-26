@@ -6,6 +6,7 @@ from aicsimageio import AICSImage
 import json
 import nest_asyncio
 from qtpy.QtWidgets import QApplication, QPushButton
+from collections import defaultdict
 
 nest_asyncio.apply()
 def read_json(fn,target):
@@ -262,23 +263,32 @@ class uic(object):
 
     #save input
     def saveValue(self):
+        self.userInput=defaultdict(list)
         self.paramkey = []
         self.paramvalue = []
         for i in range(len(self.labelwidgets)):
             self.paramkey.append(self.labelwidgets[i].text())
             try:
                 self.paramvalue.append(self.valuewidgets[i].text())
+                self.userInput[self.labelwidgets[i].text()].append(self.valuewidgets[i].text())
+
                 print("userinput--{}:{}".format(self.labelwidgets[i].text(),self.valuewidgets[i].text()))
             except:
+                self.userInput[self.labelwidgets[i].text()].append(self.valuewidgets[i].currentText())
+
                 print("userinput--{}:{}".format(self.labelwidgets[i].text(), self.valuewidgets[i].currentText()))
                 self.paramvalue.append(self.valuewidgets[i].currentText())
         #get value according to label
         print(self.getValue("Focus stabilization device:"))
+        with open('dataTest.json', 'w') as fp:
+            json.dump(self.userInput, fp)
+
 
     def getValue(self,keystr):
         #uncomment: get instant value
         #self.saveValue()
         try:
+            self.userInput['focus_stabilization'].append(self.paramvalue[self.paramkey.index(keystr)])
             return self.paramvalue[self.paramkey.index(keystr)]
         except Exception as e:
             print(e)
