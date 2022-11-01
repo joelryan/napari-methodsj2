@@ -1,14 +1,16 @@
 
 
-A Napari plugin script of imageJ2 adaptation to Napari
+A Napari plugin script of imageJ2 adaptation to Napari.
+
+This work is currently still under development. Specifically, text generation tools are not currently available.
 
 ----------------------------------
 
-This is the repository for Napari-methodsJ2, an integration of the original ImageJ2 software and Napari software for multidimensional image data, with a focus on scientific imaging. Its central goal is enable users to access it through Napari software and to broaden the use of ImageJ2.
+This is the repository for napari-methodsj2, an integration of the original MethodsJ2 script for napari. Its central goal is enable users to access it through Napari software and to broaden the use of MethodsJ2.
 
-Napari-ImageJ2 will keep most function of imageJ2 to helps users write a materials and methods text for microscopy experiments by sourcing experiment information from metadata, as well as information from a microscope hardware configuration file generated in Micro-Meta App.  It integrates the image processing logic with graphical user interface (UI), users could modify pictures and enter information at the same time.
+napari-methodsj2 will keep most function of MethodsJ2 to helps users write a materials and methods text for microscopy experiments by sourcing experiment information from metadata, as well as information from a microscope hardware configuration file generated in Micro-Meta App.  It integrates the image processing logic with graphical user interface (UI), users could modify pictures and enter information at the same time.
 
-The original imageJ2 written in Python2. The plugin code is written in Python 3 for convenience of future maintenance and upgrade, and the Napari-methodsJ2 was developed as an napari version of ImageJ2. To learn about ImageJ2, read the [**paper**](https://www.biorxiv.org/content/10.1101/2021.06.23.449674v1).
+The original MethodsJ2 was written in Python for Fiji. The plugin code in this repository is written in Python 3 for convenience of future maintenance and upgrade. To learn about ImageJ2, read the [**paper**](https://www.biorxiv.org/content/10.1101/2021.06.23.449674v1).
 
 
 ## Installation
